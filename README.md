@@ -1,6 +1,6 @@
 # angular-js-demo
 
-Angular-JS-Demo elaborates basic create, update & delete (CRUD) operations based on angularjs technology.
+Angular-JS-Demo elaborates basic create, update & delete (CRUD) & search operations based on angularjs technology.
 
 1.Main Page
 ![image](https://user-images.githubusercontent.com/50480445/130323884-ebff5f08-3f37-4e8b-95f9-c0e5858030f9.png)
