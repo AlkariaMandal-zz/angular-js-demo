@@ -4,318 +4,292 @@
 	<title>Simple Angular JS CRUD Example</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script
 	
 </head>
 <body ng-app="developerApp" ng-controller="developerController">
 
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">dEveloper Zone</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">List</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Contact Us</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right" data-toggle="modal" data-target="#myModalLogin">
-					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-							Login</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">dEveloperZone</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="">Home</a>
+      </li>
+	  <li class="nav-item" data-toggle="modal" data-target="#myModalAdd">
+        <a class="nav-link" href="">Add Developer</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>    
+    </ul>
+	<ul class="navbar-nav ml-auto" data-toggle="modal" data-target="#myModalLogin">
+		<li class="nav-item"><a class="nav-link" href=""><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+	</ul>
+  </div>  
+</nav>
+<div class="container">
+		
+	<div class="clearfix"></div>
+	<hr>
 
-	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-sm-2 sidenav">
-				<p>
-					<a href="#" data-toggle="modal" data-target="#myModalAdd">Add Developer</a>
-				</p>
-			</div>
-			<div class="col-sm-8 text-left">
-
-				<div class="container-fluid">
-					<hr>
-					
-					<button type="button" class="btn btn-info btn-lg pull-right"
-			data-toggle="modal" data-target="#myModalAdd"><i class="glyphicon glyphicon-plus"></i> {{add}}</button>
-					<div class="col-sm-6">
-							<input type="text" class="form-control" id="searchText" placeholder="Search..." >
-					</div>
-						
-					<div class="clearfix"></div>
-					<hr>
-
-					<div class="alert alert-info alert-dismissible" role="alert"
-						ng-if="info">
-						<button type="button" class="close" aria-label="Close">
-							<span aria-hidden="true" ng-click="clearInfo()">&times;</span>
-						</button>
-						{{info}}
-					</div>
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>{{tbl_heading_index}}</th>
-								<th>{{tbl_heading_name}}</th>
-								<th>{{tbl_heading_designation}}</th>
-								<th>{{tbl_heading_skills}}</th>
-								<th>{{tbl_heading_email}}</th>
-								<th>{{tbl_heading_location}}</th>
-								<th>{{tbl_heading_edit}}</th>
-								<th>{{tbl_heading_delete}}</th>
-							</tr>
-						</thead>
-						<tbody id="myTable">
-							<tr ng-repeat="developer in developers">
-								<td> #{{developer.id}}</td>
-								<td>{{developer.name}}</td>
-								<td>{{developer.designation}}</td>
-								<td>{{developer.skills.join()}}</td>
-								<td>{{developer.email}}</td>
-								<td>{{developer.location}}</td>
-								<td>
-									<button class="btn btn-info btn-sm" type="button"
-										data-toggle="modal" data-target="#myModalEdit"
-										ng-click="selectDeveloper(developer)">Edit</button>
-								</td>
-								<td>
-									<button class="btn btn-danger btn-sm" type="button"
-										data-toggle="modal" data-target="#myModalDelete"
-										ng-click="selectDeveloper(developer)">Delete</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div id="myModalLogin" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Login</h4>
-							</div>
-							<div class="modal-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label for="inputEmail3" class="col-sm-2 control-label">Username</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputUsername"
-												placeholder="Username" ng-model="newUser.name">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
-										<div class="col-sm-10">
-											<input type="password" class="form-control" id="inputpassword"
-												placeholder="password" ng-model="newUser.password">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
-											<button type="button" class="btn btn-info"
-												data-dismiss="modal" ng-click="login();">Login</button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				
-				
-				<div id="myModalAdd" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">{{add}}</h4>
-							</div>
-							<div class="modal-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label for="inputName" class="col-sm-2 control-label">{{tbl_heading_name}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputName"
-												placeholder="Name" ng-model="newDeveloper.name">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputDesignation" class="col-sm-2 control-label">{{tbl_heading_designation}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputDesignation"
-												placeholder="Designation" ng-model="newDeveloper.designation">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
-										<span ng-repeat="skill in skills" class="checkbox-inline">
-											<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]"/>{{skill}}
-										</span>
-										
-									</div>
-									
-									
-									
-
-									<div class="form-group" >
-										<label for="inputEmail3" class="col-sm-2 control-label">{{tbl_heading_email}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputEmail3"
-												placeholder="Email" ng-model="newDeveloper.email">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputEmail3" class="col-sm-2 control-label">{{tbl_heading_location}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputLocation"
-												placeholder="Location" ng-model="newDeveloper.location">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
-											<button type="button" class="btn btn-info"
-												data-dismiss="modal" ng-click="saveDeveloper();">Save</button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div id="myModalEdit" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">{{update}}</h4>
-							</div>
-							<div class="modal-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label for="inputName" class="col-sm-2 control-label">{{tbl_heading_name}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputName"
-												placeholder="Name" ng-model="clickedDeveloper.name">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputDesignation" class="col-sm-2 control-label">{{tbl_heading_designation}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputDesignation"
-												placeholder="Designation" ng-model="clickedDeveloper.designation">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
-										<span ng-repeat="skill in skills" class="checkbox-inline">
-												<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]" ng-checked="onlyChecked(clickedDeveloper,skill);"/>{{skill}}
-										</span>
-										
-									</div>
-
-									<div class="form-group">
-										<label for="inputEmail" class="col-sm-2 control-label">{{tbl_heading_email}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputEmail"
-												placeholder="Email" ng-model="clickedDeveloper.email">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label for="inputlocation" class="col-sm-2 control-label">{{tbl_heading_location}}</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputlocation"
-												placeholder="Location" ng-model="clickedDeveloper.location">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-10">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal" ng-click="updateDeveloper();">Update</button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer">
-
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div id="myModalDelete" class="modal fade" role="dialog">
-										<div class="modal-dialog">
-											<!-- Modal content-->
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">Are You Sure?</h4>
-												</div>
-												<div class="modal-body">
-													<h4>{{clickedDeveloper.name}} </h4> will be deleted
-														permanently.
-													<br />
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger pull-left"
-														data-dismiss="modal"
-														ng-click="deleteDeveloper(clickedDeveloper)">Yes</button>
-													<button type="button" class="btn btn-info pull-right"
-														data-dismiss="modal">No</button>
-												</div>
-											</div>
-										</div>
-									</div>
+	<div class="alert alert-info alert-dismissible" role="alert"
+		ng-if="info">
+		<button type="button" class="close" aria-label="Close">
+			<span aria-hidden="true" ng-click="clearInfo()">&times;</span>
+		</button>
+		{{info}}
 	</div>
-			<div class="col-sm-2 sidenav">
-				<div class="well">
-					<p>ADS</p>
-				</div>
-				<div class="well">
-					<p>ADS</p>
-				</div>
-			</div>
+	<div class="table-responsive">
+	<div class="input-group">
+		<input type="text" id="searchText" class="form-control" placeholder="serach by any text...">
+		<div class="input-group-prepend">
+			<span class="input-group-text">Search</span>
 		</div>
+	</div>
+	<table class="table">	
+		<thead>
+			<tr>
+				<th>{{tbl_heading_index}}</th>
+				<th>{{tbl_heading_name}}</th>
+				<th>{{tbl_heading_designation}}</th>
+				<th>{{tbl_heading_skills}}</th>
+				<th>{{tbl_heading_email}}</th>
+				<th>{{tbl_heading_location}}</th>
+				<th>{{tbl_heading_edit}}</th>
+				<th>{{tbl_heading_delete}}</th>
+			</tr>
+		</thead>
+		<tbody id="myTable">
+			<tr ng-repeat="developer in developers">
+				<td> #{{developer.id}}</td>
+				<td>{{developer.name}}</td>
+				<td>{{developer.designation}}</td>
+				<td>{{developer.skills.join()}}</td>
+				<td>{{developer.email}}</td>
+				<td>{{developer.location}}</td>
+				<td>
+					<button class="btn btn-info btn-sm" type="button"
+						data-toggle="modal" data-target="#myModalEdit"
+						ng-click="selectDeveloper(developer)">Edit</button>
+				</td>
+				<td>
+					<button class="btn btn-danger btn-sm" type="button"
+						data-toggle="modal" data-target="#myModalDelete"
+						ng-click="selectDeveloper(developer)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+<div id="myModalLogin" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<h4 class="modal-title">Login</h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputUsername"
+							placeholder="Username" ng-model="newUser.name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputpassword"
+							placeholder="password" ng-model="newUser.password">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="login();">Login</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+</div>
+
+
+<div id="myModalAdd" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			
+			<h4 class="modal-title">{{add}}</h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputName" class="col-sm-2 control-label">{{tbl_heading_name}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputName"
+							placeholder="Name" ng-model="newDeveloper.name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputDesignation" class="col-sm-2 control-label">{{tbl_heading_designation}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputDesignation"
+							placeholder="Designation" ng-model="newDeveloper.designation">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
+					<span ng-repeat="skill in skills" class="checkbox-inline">
+						<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]"/>{{skill}}
+					</span>
+					
+				</div>
+				
+				
+				
+
+				<div class="form-group" >
+					<label for="inputEmail3" class="col-sm-2 control-label">{{tbl_heading_email}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputEmail3"
+							placeholder="Email" ng-model="newDeveloper.email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">{{tbl_heading_location}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputLocation"
+							placeholder="Location" ng-model="newDeveloper.location">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="button" class="btn btn-success"
+							data-dismiss="modal" ng-click="saveDeveloper();">Save</button>
+							<button type="button" class="btn btn-danger"
+				data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+</div>
+<div id="myModalEdit" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			
+			<h4 class="modal-title">{{update}}</h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputName" class="col-sm-2 control-label">{{tbl_heading_name}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputName"
+							placeholder="Name" ng-model="clickedDeveloper.name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputDesignation" class="col-sm-2 control-label">{{tbl_heading_designation}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputDesignation"
+							placeholder="Designation" ng-model="clickedDeveloper.designation">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
+					<span ng-repeat="skill in skills" class="checkbox-inline">
+							<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]" ng-checked="onlyChecked(clickedDeveloper,skill);"/>{{skill}}
+					</span>
+					
+				</div>
+
+				<div class="form-group">
+					<label for="inputEmail" class="col-sm-2 control-label">{{tbl_heading_email}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputEmail"
+							placeholder="Email" ng-model="clickedDeveloper.email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputlocation" class="col-sm-2 control-label">{{tbl_heading_location}}</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputlocation"
+							placeholder="Location" ng-model="clickedDeveloper.location">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="button" class="btn btn-success"
+							data-dismiss="modal" ng-click="updateDeveloper();">Update</button>
+							<button type="button" class="btn btn-danger"
+				data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+</div>
+<div id="myModalDelete" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Are You Sure?</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<h4>{{clickedDeveloper.name}} </h4> will be deleted
+									permanently.
+								<br />
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger pull-left"
+									data-dismiss="modal"
+									ng-click="deleteDeveloper(clickedDeveloper)">Yes</button>
+								<button type="button" class="btn btn-info pull-right"
+									data-dismiss="modal">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
 	</div>
 </body>
 <script type="text/javascript">
