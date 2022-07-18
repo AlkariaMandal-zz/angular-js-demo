@@ -37,63 +37,64 @@
 	</ul>
   </div>  
 </nav>
-<div class="container">
-		
+
+
+<div class="container mt-2">
+	<h1>Angular JS Simple CRUD Example</h1>
 	<div class="clearfix"></div>
 	<hr>
-
-	<div class="alert alert-info alert-dismissible" role="alert"
-		ng-if="info">
+	<div class="alert alert-info alert-dismissible" role="alert" ng-if="info">
 		<button type="button" class="close" aria-label="Close">
 			<span aria-hidden="true" ng-click="clearInfo()">&times;</span>
 		</button>
 		{{info}}
 	</div>
-	<div class="table-responsive">
-	<div class="row">
-		<div class="cols>
-			<div class="nav-item" data-toggle="modal" data-target="#myModalAdd">
-				<a class="nav-link" href=""> + Add Developer</a>
-			</div>
-		</div>
+	<div class="row-12">
 		<div class="cols">
-			<div class="input-group">
-				<input type="text" id="searchText" class="form-control" placeholder="serach by any text...">
-			</div>
+			<button class="btn btn-success btn-block btn-md" type="button"
+				data-toggle="modal" data-target="#myModalAdd">+ Add Developer
+			</button>
 		</div>
-	</div>	
-	<table class="table">	
-		<thead>
-			<tr>
-				<th>{{tbl_heading_index}}</th>
-				<th>{{tbl_heading_name}}</th>
-				<th>{{tbl_heading_designation}}</th>
-				<th>{{tbl_heading_email}}</th>
-				<th>{{tbl_heading_location}}</th>
-				<th>{{tbl_heading_action}}</th>
-			</tr>
-		</thead>
-		<tbody id="myTable">
-			<tr ng-repeat="developer in developers">
-				<td>{{developer.id}}</td>
-				<td>{{developer.name}}</td>
-				<td>{{developer.designation}}</td>
-				<td>{{developer.email}}</td>
-				<td>{{developer.location}}</td>
-				<td>
-					<button class="btn btn-info btn-sm" type="button"
-						data-toggle="modal" data-target="#myModalEdit"
-						ng-click="selectDeveloper(developer)">Edit
-					</button>
-					<button class="btn btn-danger btn-sm" type="button" style="margin-left:10px;"
-						data-toggle="modal" data-target="#myModalDelete"
-						ng-click="selectDeveloper(developer)">Delete
-					</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<hr>
+		<div class="cols">
+			<input type="text" id="searchText" class="form-control" placeholder="serach by any text...">
+		</div>
+		<br>
 	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th>{{tbl_heading_index}}</th>
+					<th>{{tbl_heading_name}}</th>
+					<th>{{tbl_heading_designation}}</th>
+					<th>{{tbl_heading_email}}</th>
+					<th>{{tbl_heading_location}}</th>
+					<th>{{tbl_heading_action}}</th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<tr ng-repeat="developer in developers">
+					<td>{{developer.id}}</td>
+					<td>{{developer.name}}</td>
+					<td>{{developer.designation}}</td>
+					<td>{{developer.email}}</td>
+					<td>{{developer.location}}</td>
+					<td>
+						<button class="btn btn-primary btn-sm" type="button"
+							data-toggle="modal" data-target="#myModalEdit"
+							ng-click="selectDeveloper(developer)">Update
+						</button>
+						<button class="btn btn-danger btn-sm" type="button"
+							data-toggle="modal" data-target="#myModalDelete"
+							ng-click="selectDeveloper(developer)">Delete
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 <div id="myModalLogin" class="modal fade" role="dialog">
 <div class="modal-dialog">
 
@@ -120,11 +121,14 @@
 							placeholder="password" ng-model="newUser.password">
 					</div>
 				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="login();">Login</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<div class="col-sm-offset-2 col-sm-12">
+					<div class="row-12">
+						<div class="cols float-left">
+							<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="login();">Login</button>
+						</div>
+						<div class="cols float-right">
+						 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -179,13 +183,15 @@
 							placeholder="Location" ng-model="newDeveloper.location">
 					</div>
 				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="button" class="btn btn-success"
-							data-dismiss="modal" ng-click="saveDeveloper();">Save</button>
-							<button type="button" class="btn btn-danger"
-				data-dismiss="modal">Close</button>
+				
+				<div class="col-sm-offset-2 col-sm-12">
+					<div class="row-12">
+						<div class="cols float-left">
+							<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveDeveloper();">Submit</button>
+						</div>
+						<div class="cols float-right">
+						 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -238,12 +244,15 @@
 					</div>
 				</div>
 				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="button" class="btn btn-success"
-							data-dismiss="modal" ng-click="updateDeveloper();">Update</button>
-							<button type="button" class="btn btn-danger"
-				data-dismiss="modal">Close</button>
+				
+				<div class="col-sm-offset-2 col-sm-12">
+					<div class="row-12">
+						<div class="cols float-left">
+							<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateDeveloper();">Update</button>
+						</div>
+						<div class="cols float-right">
+						 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
 					</div>
 				</div>
 			</form>
