@@ -12,7 +12,7 @@
 </head>
 <body ng-app="developerApp" ng-controller="developerController">
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark text-light">
   <a class="navbar-brand" href="#">dEveloperZone</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
@@ -49,43 +49,46 @@
 		</button>
 		{{info}}
 	</div>
-	<div class="table-responsive table-striped">
-	<div class="input-group">
-		<input type="text" id="searchText" class="form-control" placeholder="serach by any text...">
-		<div class="input-group-prepend">
-			<span class="input-group-text">Search</span>
+	<div class="table-responsive">
+	<div class="row">
+		<div class="cols>
+			<div class="nav-item" data-toggle="modal" data-target="#myModalAdd">
+				<a class="nav-link" href=""> + Add Developer</a>
+			</div>
 		</div>
-	</div>
+		<div class="cols">
+			<div class="input-group">
+				<input type="text" id="searchText" class="form-control" placeholder="serach by any text...">
+			</div>
+		</div>
+	</div>	
 	<table class="table">	
 		<thead>
 			<tr>
 				<th>{{tbl_heading_index}}</th>
 				<th>{{tbl_heading_name}}</th>
 				<th>{{tbl_heading_designation}}</th>
-				<th>{{tbl_heading_skills}}</th>
 				<th>{{tbl_heading_email}}</th>
 				<th>{{tbl_heading_location}}</th>
-				<th>{{tbl_heading_edit}}</th>
-				<th>{{tbl_heading_delete}}</th>
+				<th>{{tbl_heading_action}}</th>
 			</tr>
 		</thead>
 		<tbody id="myTable">
 			<tr ng-repeat="developer in developers">
-				<td> #{{developer.id}}</td>
+				<td>{{developer.id}}</td>
 				<td>{{developer.name}}</td>
 				<td>{{developer.designation}}</td>
-				<td>{{developer.skills.join()}}</td>
 				<td>{{developer.email}}</td>
 				<td>{{developer.location}}</td>
 				<td>
 					<button class="btn btn-info btn-sm" type="button"
 						data-toggle="modal" data-target="#myModalEdit"
-						ng-click="selectDeveloper(developer)">Edit</button>
-				</td>
-				<td>
-					<button class="btn btn-danger btn-sm" type="button"
+						ng-click="selectDeveloper(developer)">Edit
+					</button>
+					<button class="btn btn-danger btn-sm" type="button" style="margin-left:10px;"
 						data-toggle="modal" data-target="#myModalDelete"
-						ng-click="selectDeveloper(developer)">Delete</button>
+						ng-click="selectDeveloper(developer)">Delete
+					</button>
 				</td>
 			</tr>
 		</tbody>
@@ -159,17 +162,7 @@
 							placeholder="Designation" ng-model="newDeveloper.designation">
 					</div>
 				</div>
-				
-				<div class="form-group">
-					<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
-					<span ng-repeat="skill in skills" class="checkbox-inline">
-						<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]"/>{{skill}}
-					</span>
-					
-				</div>
-				
-				
-				
+							
 
 				<div class="form-group" >
 					<label for="inputEmail3" class="col-sm-2 control-label">{{tbl_heading_email}}</label>
@@ -227,14 +220,6 @@
 						<input type="text" class="form-control" id="inputDesignation"
 							placeholder="Designation" ng-model="clickedDeveloper.designation">
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="inputSkills" class="col-sm-2 control-label">{{tbl_heading_skills}}</label>								
-					<span ng-repeat="skill in skills" class="checkbox-inline">
-							<input type="checkbox" id="{{skill}}" ng-model="selectedList[skill]" ng-checked="onlyChecked(clickedDeveloper,skill);"/>{{skill}}
-					</span>
-					
 				</div>
 
 				<div class="form-group">
@@ -305,41 +290,25 @@
 	$scope.tbl_heading_index = "ID";
 	$scope.tbl_heading_name = "Name";
 	$scope.tbl_heading_designation = "Designation";
-	$scope.tbl_heading_skills = "Skills";
 	$scope.tbl_heading_email = "Email";
 	$scope.tbl_heading_location = "Location";
-	$scope.tbl_heading_edit = "Edit";
-	$scope.tbl_heading_delete = "Delete";
+	$scope.tbl_heading_action = "Action";
 	
-	$scope.skills = ["Java", "AngularJS","Spring Boot"];
 	$scope.selectedList={};
 	
 	
 	$scope.developers = [
-		{id:1, name : "John Doe", designation : "Engineer", skills : $scope.skills, email : "john.doe@gmail.com", location:"India"},
-		{id:2, name: "Doe John", designation : "IT Analyst", skills : ["Java","AngularJS"], email:"doe.john@gmail.com", location:"Australia"},
-		{id:3, name: "Abc Xyz", designation : "System Engineer", skills : ["Java"], email:"abc.xyz@gmail.com", location:"Africa"},
-		{id:4, name: "Xyz Abc", designation : "Consultant", skills : ["Spring Boot","AngularJS"], email:"xyz.abc@gmail.com", location:"Denmark"}
+		{id:1, name : "John Doe", designation : "Engineer", email : "john.doe@gmail.com", location:"India"},
+		{id:2, name: "Doe John", designation : "IT Analyst", email:"doe.john@gmail.com", location:"Australia"},
+		{id:3, name: "Abc Xyz", designation : "System Engineer", email:"abc.xyz@gmail.com", location:"Africa"},
+		{id:4, name: "Xyz Abc", designation : "Consultant", email:"xyz.abc@gmail.com", location:"Denmark"}
 	];
 	
 	
 
 	$scope.saveDeveloper = function(){
-		console.log("inside Saving...");
-		
+		console.log("inside Saving...");		
 		console.log("selectedList   "+$scope.selectedList);
-		$scope.skillList = [];
-		angular.forEach($scope.selectedList, function (selected, skill) {
-			if (selected) {
-				console.log(skill);
-				$scope.skillList.push(skill);
-			}
-		});
-		
-		
-		console.log("$scope.skillList :"+$scope.skillList);
-
-		$scope.newDeveloper.skills = $scope.skillList;
 		$scope.newDeveloper.id = (Math.floor(Math.random() * 10) + 10);	
 		$scope.developers.push($scope.newDeveloper);
 		$scope.info = $scope.newDeveloper.name + " added Successfully!";
@@ -349,17 +318,9 @@
 	};
 	
 	$scope.updateDeveloper = function(){
-		$scope.skillList = [];
 		console.log("inside Updating...");
-		angular.forEach($scope.selectedList, function (selected, skill) {
-			if (selected) {
-				console.log(skill);
-				$scope.clickedDeveloper.skills.push(skill);
-			}
-		});
 		$scope.info = $scope.clickedDeveloper.name + " updated Successfully!";
 		$scope.selectedList={};
-		$scope.skillList=[];
 	};
 
 
@@ -381,18 +342,6 @@
 		console.log("inside login...");
 		alert("Work in progress...");
 	};
-	
-	$scope.onlyChecked = function (developer, skill) {
-     var returnValue = false;
-     angular.forEach(developer.skills, function (item, key) {
-         if (item == skill) {
-              returnValue = true;
-              return;
-         }
-     });
-
-     return returnValue;
-};
 });
 
 $(document).ready(function(){
